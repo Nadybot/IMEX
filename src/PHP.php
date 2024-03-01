@@ -31,15 +31,20 @@ class PHP implements Imex {
 		return $vars;
 	}
 
-	public static function export(mixed $in): string {
+	public static function export(mixed $in, bool $noHeader=false): string {
+		$header = '';
+		if ($noHeader === false) {
+			$header = '<?' . 'php' . PHP_EOL . PHP_EOL.
+				'declare(script_types=1);' . PHP_EOL . PHP_EOL;
+		}
 		if (!is_array($in) || Utils::arrayIsList($in)) {
-			return VarExporter::export($in);
+			return $header . VarExporter::export($in);
 		}
 		$blocks = [];
 		foreach ($in as $key => $value) {
 			$blocks []= "\$vars[" . VarExporter::export($key) . "] = ".
 				VarExporter::export($value) . ";\n";
 		}
-		return join("", $blocks);
+		return $header . join("", $blocks);
 	}
 }
