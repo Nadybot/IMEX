@@ -20,14 +20,16 @@ class TOML implements Imex {
 		try {
 			$builder = new TomlBuilder(4);
 			foreach ($in as $key => $data) {
-				if (!is_array($data)) {
+				if (!isset($data)) {
+					continue;
+				} elseif (!is_array($data)) {
 					$builder->addValue($key, $data);
 				} elseif (self::arrayIsList($data) && count(array_filter($data, "is_scalar"))) {
 					$builder->addValue($key, $data);
 				}
 			}
 			foreach ($in as $key => $data) {
-				if (!is_array($data)) {
+				if (!isset($data) || !is_array($data)) {
 					continue;
 				}
 				if (self::arrayIsList($data) && count(array_filter($data, "is_scalar"))) {
@@ -37,13 +39,17 @@ class TOML implements Imex {
 					foreach ($data as $block) {
 						$builder->addArrayOfTable($key);
 						foreach ($block as $key => $value) {
-							$builder->addValue($key, $value);
+							if (isset($value)) {
+								$builder->addValue($key, $value);
+							}
 						}
 					}
 				} else {
 					$builder->addTable($key);
 					foreach ($data as $key => $value) {
-						$builder->addValue($key, $value);
+						if (isset($value)) {
+							$builder->addValue($key, $value);
+						}
 					}
 				}
 			}
