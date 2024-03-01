@@ -38,17 +38,17 @@ class TOML implements Imex {
 				if (array_is_list($data)) {
 					foreach ($data as $block) {
 						$builder->addArrayOfTable($key);
-						foreach ($block as $key => $value) {
+						foreach ($block as $subkey => $value) {
 							if (isset($value)) {
-								$builder->addValue($key, $value);
+								$builder->addValue($subkey, $value);
 							}
 						}
 					}
 				} else {
 					$builder->addTable($key);
-					foreach ($data as $key => $value) {
+					foreach ($data as $subkey => $value) {
 						if (isset($value)) {
-							$builder->addValue($key, $value);
+							$builder->addValue($subkey, $value);
 						}
 					}
 				}
