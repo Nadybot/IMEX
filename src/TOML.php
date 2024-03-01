@@ -21,7 +21,7 @@ class TOML implements Imex {
 			$builder = new TomlBuilder(4);
 			foreach ($in as $key => $data) {
 				if (!isset($data)) {
-					continue;
+					$builder->addComment("{$key} = null");
 				} elseif (!is_array($data)) {
 					$builder->addValue($key, $data);
 				} elseif (self::arrayIsList($data) && count(array_filter($data, "is_scalar"))) {
@@ -41,6 +41,8 @@ class TOML implements Imex {
 						foreach ($block as $subkey => $value) {
 							if (isset($value)) {
 								$builder->addValue($subkey, $value);
+							} else {
+								$builder->addComment("{$subkey} = null");
 							}
 						}
 					}
@@ -49,6 +51,8 @@ class TOML implements Imex {
 					foreach ($data as $subkey => $value) {
 						if (isset($value)) {
 							$builder->addValue($subkey, $value);
+						} else {
+							$builder->addComment("{$subkey} = null");
 						}
 					}
 				}
