@@ -35,7 +35,7 @@ class PHP implements Imex {
 		$header = '';
 		if ($noHeader === false) {
 			$header = '<?' . 'php' . PHP_EOL . PHP_EOL.
-				'declare(script_types=1);' . PHP_EOL . PHP_EOL;
+				'declare(strict_types=1);' . PHP_EOL . PHP_EOL;
 		}
 		if (!is_array($in) || Utils::arrayIsList($in)) {
 			return $header . VarExporter::export($in);
