@@ -31,4 +31,12 @@ final class PhpUnitTest extends TestCase {
 		$php = trim(PHP::export($data));
 		$this->assertSame($result, $php);
 	}
+
+	public function testImporting(): void {
+		$code = "<?" . "php\n\n".
+			'$vars = [];' . PHP_EOL.
+			'$vars["a"] = 24;' . PHP_EOL;
+		$vars = PHP::import($code);
+		$this->assertSame(["a" => 24], $vars);
+	}
 }

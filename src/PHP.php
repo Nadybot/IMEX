@@ -19,18 +19,12 @@ class PHP implements Imex {
 				$error['type'] ?? 1
 			);
 		}
-		error_clear_last();
-		if (fclose($file) === false) {
-			$error = error_get_last();
-			throw new ImportException(
-				$error['message'] ?? 'Error closing ' . $path,
-				$error['type'] ?? 1
-			);
-		}
 		try {
 			include $path;
 		} catch (\ParseError $e) {
 			throw new ImportException($e->getMessage(), $e->getCode(), $e);
+		} finally {
+			fclose($file);
 		}
 
 		/** @var mixed $vars */
