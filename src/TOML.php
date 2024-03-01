@@ -14,7 +14,7 @@ class TOML implements Imex {
 	}
 
 	public static function export(mixed $in): string {
-		if (!is_array($in) || self::arrayIsList($in)) {
+		if (!is_array($in) || Utils::arrayIsList($in)) {
 			return JSON::export($in);
 		}
 		try {
@@ -24,7 +24,7 @@ class TOML implements Imex {
 					$builder->addComment("{$key} = null");
 				} elseif (!is_array($data)) {
 					$builder->addValue($key, $data);
-				} elseif (self::arrayIsList($data) && count(array_filter($data, "is_scalar"))) {
+				} elseif (Utils::arrayIsList($data) && count(array_filter($data, "is_scalar"))) {
 					$builder->addValue($key, $data);
 				}
 			}
@@ -32,7 +32,7 @@ class TOML implements Imex {
 				if (!isset($data) || !is_array($data)) {
 					continue;
 				}
-				if (self::arrayIsList($data) && count(array_filter($data, "is_scalar"))) {
+				if (Utils::arrayIsList($data) && count(array_filter($data, "is_scalar"))) {
 					continue;
 				}
 				if (array_is_list($data)) {
@@ -61,19 +61,5 @@ class TOML implements Imex {
 		} catch (\Throwable $e) {
 			throw new ExportException($e->getMessage(), $e->getCode(), $e);
 		}
-	}
-
-	/** @param array<mixed> $array */
-	private static function arrayIsList(array $array): bool {
-		if (function_exists('array_ist_list')) {
-			return \array_is_list($array);
-		}
-		$i = -1;
-		foreach ($array as $k => $v) {
-			if ($k !== ++$i) {
-				return false;
-			}
-		}
-		return true;
 	}
 }

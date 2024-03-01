@@ -12,7 +12,9 @@
     ],
     "require": {
         "php": ">=8.0.0",
-        "yosymfony/toml": "^1.0"
+        "yosymfony/toml": "^1.0",
+        "nikic/php-parser": "^4.18",
+        "brick/varexporter": "^0.4.0"
     },
     "autoload": {
         "psr-4": {

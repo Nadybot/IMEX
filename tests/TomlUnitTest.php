@@ -3,7 +3,6 @@
 namespace Nadylib\IMEX\Tests;
 
 use Nadylib\IMEX\TOML;
-use PHPUnit\Framework\Attributes\{DataProvider, Small};
 use PHPUnit\Framework\TestCase;
 
 /** @Small */
