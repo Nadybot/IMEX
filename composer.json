@@ -1,0 +1,38 @@
+{
+    "name": "nadylib/imex",
+    "description": "A library that abstracts away common file formats for easier importing and exporting",
+    "type": "library",
+    "authors": [
+      {
+        "name": "Nadyita",
+        "email": "nadyita@hodorraid.org",
+        "homepage": "https://nadybot.org",
+        "role": "Developer"
+      }
+    ],
+    "require": {
+        "php": ">=8.0.0",
+        "yosymfony/toml": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nadylib\\IMEX\\": "src",
+            "Nadylib\\IMEX\\Tests\\": "tests",
+            "PHP_CodeSniffer\\Standards\\Nadybot\\": "style/Nadybot"
+        }
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.49",
+        "squizlabs/php_codesniffer": "^3.8",
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^9.6"
+    },
+    "license": ["AGPL-3.0-or-later"],
+    "scripts": {
+      "tests": [
+        "phpunit -c phpunit.xml --testdox --no-interaction --colors=never",
+        "phpstan analyse --memory-limit 512M --no-ansi -cphpstan.neon --error-format=github --no-progress",
+        "phpcs --no-colors --standard=style/Nadybot/ruleset.xml src"
+      ]
+    }
+}
