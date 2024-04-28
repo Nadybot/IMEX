@@ -19,22 +19,22 @@
     "autoload": {
         "psr-4": {
             "Nadylib\\IMEX\\": "src",
-            "Nadylib\\IMEX\\Tests\\": "tests",
-            "PHP_CodeSniffer\\Standards\\Nadybot\\": "style/Nadybot"
+            "Nadylib\\IMEX\\Tests\\": "tests"
         }
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.49",
         "squizlabs/php_codesniffer": "^3.8",
         "phpstan/phpstan": "^1.10",
-        "phpunit/phpunit": "^9.6"
+        "phpunit/phpunit": "^9.6",
+        "nadybot/nadystyle": "^1.0"
     },
     "license": ["AGPL-3.0-or-later"],
     "scripts": {
       "tests": [
         "phpunit -c phpunit.xml --testdox --no-interaction --colors=never",
         "phpstan analyse --memory-limit 512M --no-ansi -cphpstan.neon --error-format=github --no-progress",
-        "phpcs --no-colors --standard=style/Nadybot/ruleset.xml src"
+        "phpcs --no-colors src"
       ]
     }
 }
