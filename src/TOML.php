@@ -54,7 +54,7 @@ class TOML implements Imex {
 					$builder->addTable($key);
 					foreach ($data as $subkey => $value) {
 						if (isset($value)) {
-							if (!is_bool($value) && !is_float($value) && !is_int($value) && !is_string($value)) {
+							if (!is_array($value) && !is_bool($value) && !is_float($value) && !is_int($value) && !is_string($value)) {
 								throw new InvalidArgumentException('Cannot convert ' . gettype($value) . ' to TOML');
 							}
 							$builder->addValue($subkey, $value);
