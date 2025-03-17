@@ -2,6 +2,7 @@
 
 namespace Nadylib\IMEX;
 
+use InvalidArgumentException;
 use Yosymfony\Toml\{Toml as YoToml, TomlBuilder};
 
 class TOML implements Imex {
@@ -23,6 +24,9 @@ class TOML implements Imex {
 				if (!isset($data)) {
 					$builder->addComment("{$key} = null");
 				} elseif (!is_array($data)) {
+					if (!is_bool($data) && !is_float($data) && !is_int($data) && !is_string($data)) {
+						throw new InvalidArgumentException('Cannot convert ' . gettype($data) . ' to TOML.');
+					}
 					$builder->addValue($key, $data);
 				} elseif (Utils::arrayIsList($data) && count(array_filter($data, "is_scalar"))) {
 					$builder->addValue($key, $data);
@@ -50,6 +54,9 @@ class TOML implements Imex {
 					$builder->addTable($key);
 					foreach ($data as $subkey => $value) {
 						if (isset($value)) {
+							if (!is_bool($value) && !is_float($value) && !is_int($value) && !is_string($value)) {
+								throw new InvalidArgumentException('Cannot convert ' . gettype($data) . ' to TOML.');
+							}
 							$builder->addValue($subkey, $value);
 						} else {
 							$builder->addComment("{$subkey} = null");

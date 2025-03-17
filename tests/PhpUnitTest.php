@@ -28,7 +28,7 @@ final class PhpUnitTest extends TestCase {
 
 	/** @dataProvider getPhpExamples */
 	public function testSerializing(string $result, mixed $data): void {
-		$php = trim(PHP::export($data));
+		$php = trim(PHP::export($data, true));
 		$this->assertSame($result, $php);
 	}
 
