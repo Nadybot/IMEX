@@ -5,7 +5,9 @@ namespace Nadylib\IMEX\Tests;
 use Nadylib\IMEX\TOML;
 use PHPUnit\Framework\TestCase;
 
-/** @Small */
+/**
+ * @Small
+ */
 final class TomlUnitTest extends TestCase {
 	/** @return array<string,array{0:string,1:array<string,mixed>}> */
 	public static function getTomlExamples(): array {
@@ -25,6 +27,10 @@ final class TomlUnitTest extends TestCase {
 			'Arrays' => [
 				'/^\s*\[\[a\]\]\n\s*a\s*=\s*true\n\s*\[\[a\]\]\n\s*a\s*=\s*false\n\s*\[\[a\]\]\n\s*a\s*=\s*true\s*$/s',
 				['a' => [['a' => true], ['a' => false], ['a' => true]]],
+			],
+			'Enums' => [
+				'/^\s*a\s*=\s*"one"\s*\n\s*b\s*=\s*2\s*$/s',
+				['a' => Helper\StringEnum::ONE, 'b' => Helper\IntEnum::TWO],
 			],
 			'Complex' => [
 				'/./',

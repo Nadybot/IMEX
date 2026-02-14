@@ -8,9 +8,9 @@ class PHP implements Imex {
 	public static function import(string $in): mixed {
 		$file = \tmpfile();
 		if ($file === false) {
-			throw new ImportException("Unable to create temporary file for parsing PHP code");
+			throw new ImportException('Unable to create temporary file for parsing PHP code');
 		}
-		$path = stream_get_meta_data($file)['uri'];
+		$path = stream_get_meta_data($file)['uri']; // @phpstan-ignore-line
 		error_clear_last();
 		if (fwrite($file, $in) === false) {
 			$error = error_get_last();
@@ -34,17 +34,17 @@ class PHP implements Imex {
 	public static function export(mixed $in, bool $noHeader=false): string {
 		$header = '';
 		if ($noHeader === false) {
-			$header = '<?' . 'php' . PHP_EOL . PHP_EOL.
-				'declare(strict_types=1);' . PHP_EOL . PHP_EOL;
+			$header = '<?php' . \PHP_EOL . \PHP_EOL.
+				'declare(strict_types=1);' . \PHP_EOL . \PHP_EOL;
 		}
 		if (!is_array($in) || Utils::arrayIsList($in)) {
 			return $header . VarExporter::export($in);
 		}
 		$blocks = [];
 		foreach ($in as $key => $value) {
-			$blocks []= "\$vars[" . VarExporter::export($key) . "] = ".
+			$blocks []= '$vars[' . VarExporter::export($key) . '] = '.
 				VarExporter::export($value) . ";\n";
 		}
-		return $header . join("", $blocks);
+		return $header . implode('', $blocks);
 	}
 }

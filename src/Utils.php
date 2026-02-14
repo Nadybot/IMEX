@@ -5,7 +5,7 @@ namespace Nadylib\IMEX;
 class Utils {
 	/** @param array<mixed> $array */
 	public static function arrayIsList(array $array): bool {
-		if (function_exists('array_ist_list')) {
+		if (function_exists('array_is_list')) {
 			return \array_is_list($array);
 		}
 		$i = -1;

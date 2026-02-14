@@ -24,6 +24,9 @@ class TOML implements Imex {
 				if (!isset($data)) {
 					$builder->addComment("{$key} = null");
 				} elseif (!is_array($data)) {
+					if ($data instanceof \BackedEnum) {
+						$data = $data->value;
+					}
 					if (!is_bool($data) && !is_float($data) && !is_int($data) && !is_string($data)) {
 						throw new InvalidArgumentException('Cannot convert ' . gettype($data) . ' to TOML');
 					}
