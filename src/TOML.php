@@ -28,6 +28,9 @@ class TOML implements Imex {
 						$data = $data->value;
 					}
 					if (!is_bool($data) && !is_float($data) && !is_int($data) && !is_string($data)) {
+						if (is_object($data)) {
+							throw new InvalidArgumentException('Cannot convert ' .($data::class) . ' to TOML');
+						}
 						throw new InvalidArgumentException('Cannot convert ' . gettype($data) . ' to TOML');
 					}
 					$builder->addValue($key, $data);
@@ -57,7 +60,13 @@ class TOML implements Imex {
 					$builder->addTable($key);
 					foreach ($data as $subkey => $value) {
 						if (isset($value)) {
+							if ($value instanceof \BackedEnum) {
+								$value = $value->value;
+							}
 							if (!is_array($value) && !is_bool($value) && !is_float($value) && !is_int($value) && !is_string($value)) {
+								if (is_object($value)) {
+									throw new InvalidArgumentException('Cannot convert ' .($value::class) . ' to TOML');
+								}
 								throw new InvalidArgumentException('Cannot convert ' . gettype($value) . ' to TOML');
 							}
 							$builder->addValue($subkey, $value);

@@ -29,8 +29,12 @@ final class TomlUnitTest extends TestCase {
 				['a' => [['a' => true], ['a' => false], ['a' => true]]],
 			],
 			'Enums' => [
-				'/^\s*a\s*=\s*"one"\s*\n\s*b\s*=\s*2\s*$/s',
-				['a' => Helper\StringEnum::ONE, 'b' => Helper\IntEnum::TWO],
+				'/^\s*a\s*=\s*"one"\s*\n\s*b\s*=\s*2\s*\n\s*\[c\]\s*\n\s*a\s*=\s*1\s*$/s',
+				[
+					'a' => Helper\StringEnum::ONE,
+					'b' => Helper\IntEnum::TWO,
+					'c' => ['a' => Helper\IntEnum::ONE],
+				],
 			],
 			'Complex' => [
 				'/./',
